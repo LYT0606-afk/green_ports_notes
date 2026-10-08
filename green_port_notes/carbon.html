@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123b59">
+  <title>碳足迹测算｜绿港小贴士</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="carbon-page">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="返回绿港小贴士首页"><span class="brand-mark">✦</span><span>绿港小贴士<small>校园信息服务平台</small></span></a>
+    <nav class="main-nav" aria-label="主导航"><a href="index.html#wall">便利贴墙</a><a href="index.html#ranking">人气排行</a><a class="active" href="carbon.html">碳足迹测算</a><a href="index.html#about">关于项目</a></nav>
+    <a class="carbon-back-link" href="index.html">返回墙面</a>
+  </header>
+
+  <main>
+    <section class="carbon-hero"><div class="carbon-hero-copy"><p class="eyebrow">GREEN MOBILITY / CARBON CALCULATOR</p><span class="carbon-hero-label">绿色出行工具</span><h1>碳足迹测算<br><em>让每一段旅程更低碳</em></h1><p>选择地点与交通方式，估算本次出行排放，并比较不同出行方案。</p></div><div class="carbon-orbit" aria-label="CO2 碳排放测算"><span>CO₂</span><small>MEASURE<br>YOUR IMPACT</small></div></section>
+    <section class="carbon-layout">
+      <form class="carbon-form carbon-panel" id="carbonForm">
+        <div class="carbon-panel-heading"><div><p class="eyebrow">YOUR TRIP</p><h2>填写出行信息</h2></div><span class="form-step">01 / 01</span></div>
+        <label class="carbon-field">出发地<select id="originSelect"><option value="上海海事大学">上海海事大学</option><option value="临港大道地铁站">临港大道地铁站</option><option value="龙阳路地铁站">龙阳路地铁站</option><option value="custom">自定义输入</option></select></label>
+        <label class="carbon-field custom-place" id="originCustomField" hidden>自定义出发地<input id="originCustom" type="text" placeholder="例如：我的家"></label>
+        <label class="carbon-field">目的地<select id="destinationSelect"><option value="洋山港">洋山港</option><option value="外高桥港">外高桥港</option><option value="上海港国际客运中心">上海港国际客运中心</option><option value="custom">自定义输入</option></select></label>
+        <label class="carbon-field custom-place" id="destinationCustomField" hidden>自定义目的地<input id="destinationCustom" type="text" placeholder="例如：学校图书馆"></label>
+        <div class="segment-heading"><span>交通方式与距离</span><small>可添加换乘路段</small></div>
+        <div id="transportSegments" class="transport-segments"><div class="transport-segment" data-segment><label class="carbon-field">方式<select class="segment-mode"><option value="walk">步行</option><option value="bike">自行车</option><option value="subway">地铁</option><option value="bus">公交</option><option value="highspeed">高铁</option><option value="train">火车</option><option value="eBike">电动车</option><option value="car">汽车</option><option value="plane">飞机</option></select></label><label class="carbon-field">距离（km）<input class="segment-distance" type="number" min="0" max="10000" step="0.1" inputmode="decimal" placeholder="自动计算"></label><button class="remove-segment" type="button" aria-label="删除这一段交通" hidden>×</button></div></div>
+        <button class="add-segment" id="addSegment" type="button">＋ 添加一段交通</button>
+        <p class="distance-hint" id="distanceHint">已根据预设地点填入约 45 km</p><button class="route-button" id="routeDistanceButton" type="button">⌖ 使用高德路线计算</button><p class="route-status" id="routeStatus" role="status"></p>
+        <button class="primary-btn carbon-submit" type="submit">计算碳足迹 <span>→</span></button>
+        <p class="carbon-error" id="carbonError" role="alert" hidden></p>
+      </form>
+
+      <section class="carbon-result carbon-panel" id="carbonResult" hidden aria-live="polite">
+        <div class="carbon-panel-heading"><div><p class="eyebrow">YOUR IMPACT</p><h2>这趟出行留下了</h2></div><span class="result-mode" id="resultMode">地铁</span></div>
+        <div class="impact-number"><strong id="emissionValue">0.00</strong><span>kg CO₂</span></div>
+        <p class="impact-copy" id="impactCopy">每一次选择，都在改变城市的呼吸。</p>
+        <div class="impact-comparison"><span class="comparison-icon">🌳</span><p>相当于种了 <strong id="treeValue">0</strong> 棵树才能抵消<br><small>按 1 棵树每年吸收 18.3 kg CO₂ 计算</small></p></div>
+        <div class="advice-box"><span>绿色建议</span><p id="adviceText"></p></div>
+        <div class="history-row"><span>历史累计碳排放</span><strong><span id="historyValue">0.00</span> kg CO₂</strong></div>
+        <button class="clear-history" id="clearHistory" type="button">清空记录</button>
+      </section>
+    </section>
+
+    <section class="chart-panel carbon-panel" id="chartPanel" hidden><div class="carbon-panel-heading"><div><p class="eyebrow">EMISSION COMPARISON</p><h2>同样距离下的交通方式比较</h2><p class="chart-subtitle">按本次总距离估算每人碳排放；本次选择的方式以绿色标出</p></div><span class="chart-distance" id="chartDistance"></span></div><div class="chart-wrap"><canvas id="carbonChart" aria-label="全部交通方式碳排放对比图"></canvas></div></section>
+    <p class="carbon-footnote">排放因子参考 IPCC 及公开资料，仅供参考。</p>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="js/map-config.js"></script>
+  <script src="js/carbon.js"></script>
+</body>
+</html>

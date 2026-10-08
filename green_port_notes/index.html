@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#164b3b">
+  <title>绿港小贴士｜校园信息便利贴墙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="绿港小贴士首页"><span class="brand-mark">✦</span><span>绿港小贴士<small>校园信息服务平台</small></span></a>
+    <nav class="main-nav" aria-label="主导航"><a class="active" href="#wall">便利贴墙</a><a href="#ranking">人气排行</a><a href="carbon.html">碳足迹测算</a><a href="#about">关于项目</a></nav>
+    <div class="account-area"><span id="authStatus">游客浏览中</span><button class="auth-button" id="authButton" type="button" data-action="login">登录</button><button class="saved-trigger" id="savedTrigger" type="button" aria-label="打开我的收藏"><span>♡</span><b id="savedCount">0</b></button></div>
+  </header>
+  <main id="top">
+    <section class="intro" aria-labelledby="pageTitle"><div class="intro-copy"><p class="eyebrow">CAMPUS INFO / 2026</p><h1 id="pageTitle">把重要信息，<em>贴</em>在你会经过的地方。</h1><p class="intro-lede">替代纸质便利贴的校园信息墙。政策、术语和就业灵感，随时取用，随手收藏。</p><div class="intro-meta"><span class="live-dot"></span> 今日已有 <strong id="todayUses">0</strong> 次取用 <span class="meta-divider"></span> 共 <strong id="noteTotal">06</strong> 张便利贴</div></div><div class="intro-stamp" aria-hidden="true"><span>保存<br>好知识</span><small>EST.<br>2026</small></div></section>
+    <section class="workspace" id="wall" aria-labelledby="wallTitle">
+      <div class="wall-main"><div class="section-heading"><div><p class="eyebrow">THE NOTE WALL</p><h2 id="wallTitle">今天想取用什么？</h2></div><span class="results-count" id="resultsCount">06 NOTES</span></div><div class="toolbar"><div class="filter-tabs" role="tablist" aria-label="便利贴分类"><button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">全部 <span data-filter-count="all">06</span></button><button class="filter-tab" data-filter="policy" role="tab" aria-selected="false">政策 <span data-filter-count="policy">02</span></button><button class="filter-tab" data-filter="term" role="tab" aria-selected="false">术语 <span data-filter-count="term">02</span></button><button class="filter-tab" data-filter="job" role="tab" aria-selected="false">就业 <span data-filter-count="job">02</span></button></div><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="搜索便利贴" aria-label="搜索便利贴"></label></div><div class="note-wall" id="noteWall" aria-live="polite"></div><div class="empty-state" id="emptyState" hidden><span>⌁</span><h3>还没有找到这张便利贴</h3><p>换个关键词，或者看看其他分类吧。</p></div></div>
+      <aside class="side-panel" id="ranking"><div class="panel-title"><div><p class="eyebrow">MOST USED</p><h2>人气排行榜</h2></div><span class="trophy">♧</span></div><div class="ranking-tabs" role="tablist" aria-label="排行榜周期"><button class="ranking-tab active" data-ranking="week" role="tab" aria-selected="true">本周</button><button class="ranking-tab" data-ranking="month" role="tab" aria-selected="false">本月</button><button class="ranking-tab" data-ranking="favorites" role="tab" aria-selected="false">收藏</button></div><ol class="ranking-list" id="rankingList"></ol><div class="category-ranking"><div class="category-ranking-heading"><span>分类人气</span><small id="categoryRankingLabel">本周取用</small></div><div id="categoryRankingList"></div></div><div class="panel-rule"></div><button class="feedback-link" id="feedbackTrigger" type="button"><span>＋</span><span><b>想看什么新内容？</b><small>告诉我们你的校园问题</small></span><strong>→</strong></button></aside>
+    </section>
+    <section class="about-strip" id="about"><p class="eyebrow">ABOUT THE PROJECT</p><div><h2>知识不该被钉在<br><em>某一面墙上。</em></h2><p>“绿港小贴士”是上海海事大学大学生创新训练项目，用轻量化的方式传播绿色港口知识，让每一次好奇都有地方落脚。</p></div><div class="team-note"><span>项目团队</span><strong>陆雨婷 · 王诗雨 · 钱睿仪 · 周洁伶</strong><small>指导教师：朱玉华　·　交通运输学院</small></div></section>
+  </main>
+  <footer><span>© 2026 绿港小贴士</span><span>SHANGHAI MARITIME UNIVERSITY</span></footer>
+  <div class="modal-backdrop" id="feedbackModal" hidden><section class="feedback-modal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle"><button class="modal-close" type="button" data-close-modal aria-label="关闭反馈窗口">×</button><p class="eyebrow">DROP A NOTE</p><h2 id="feedbackTitle">把你的问题，贴过来。</h2><p>告诉我们你想在下一张便利贴上看到什么。</p><form id="feedbackForm"><label for="feedbackText">你的想法</label><textarea id="feedbackText" required maxlength="120" placeholder="例如：想了解港口碳排放核算岗位……"></textarea><button class="primary-btn" type="submit">提交反馈 <span>→</span></button></form><p class="form-success" id="formSuccess" hidden>已收到，你的建议会进入下一轮选题。</p></section></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop" id="authModal" hidden><section class="feedback-modal auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle"><button class="modal-close" id="authClose" type="button" aria-label="关闭登录窗口">×</button><p class="eyebrow">MEMBER ACCESS</p><h2 id="authTitle">登录绿港小贴士</h2><p id="authMessage">登录后可以收藏和取用便利贴。</p><form id="authForm"><label for="phoneInput">手机号</label><input id="phoneInput" type="tel" autocomplete="tel" placeholder="+86 138 0000 0000" required><label id="otpLabel" for="otpInput" hidden>短信验证码</label><input id="otpInput" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="输入验证码" hidden><button class="primary-btn" id="authSubmit" type="submit">发送验证码 <span>→</span></button></form><button class="auth-resend" id="authResend" type="button" hidden>重新发送验证码</button><small class="auth-note">游客可浏览；登录后可使用个人收藏和取用功能。</small></section></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
