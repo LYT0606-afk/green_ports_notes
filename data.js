@@ -1,0 +1,213 @@
+// 绿港小贴士数据中心
+// 新增便利贴时，复制下面的模板，修改内容并放在 noteData 数组中即可。
+// id 必须在全部便利贴中唯一，不能按分类重新编号；已有便利贴不要改号。
+// 图片路径相对于 index.html，例如："assets/images/shore-power.svg"
+// 图片会完整缩放为预览，标题自动换行并撑高卡片；较长的背面详情可滚动查看。
+// link 只填写网址；自定义按钮名称或多个链接请使用 links 数组。
+//
+// {
+//   id: 8,
+//   type: "policy", // 只能是 policy、term、job
+//   title: "一句话标题",
+//   icon: "📌",
+//   detail: "详细解释文字",
+//   link: "https://example.com/原文链接",
+//   links: [
+//     { label: "查看流程", url: "process.html" },
+//     { label: "查看原文", url: "https://example.com/原文链接" }
+//   ],
+//   image: "assets/images/example.jpg",
+//   qrLink: "https://example.com/二维码指向地址",
+//   views: 0,
+//   weekViews: 0,
+//   monthViews: 0,
+//   favorites: 0,
+//   date: "2026-03-10"
+// }
+
+const noteData = [
+  {
+    id: 1,
+    type: "policy",
+    title: "绿色港口等级评价指南",
+    icon: "📘",
+    detail: "评价围绕节能降碳、清洁能源、污染防治和资源循环等方向展开，港口可以按年度自评并申请相应等级。评价流程共 7 步：申请受理 → 企业自评 → 材料审查 → 现场评价 → 综合确定 → 公示授牌 → 后续监督。",
+    link: "process.html",
+    links: [
+      { label: "查看流程", url: "process.html" },
+      { label: "查看政策原文", url: "https://www.chinaports.org/site/content/259355.html" }
+    ],
+    image: "assets/images/green_video.jpg",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 2,
+    type: "policy",
+    title: "岸电使用政策",
+    icon: "⚓",
+    detail: "船舶靠泊具备受电条件时，应优先使用岸电。岸电能减少靠港期间的噪声、硫氧化物和颗粒物排放。",
+    link: "",
+    image: "",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 3,
+    type: "term",
+    title: "岸电 Shore Power",
+    icon: "🔌",
+    detail: "船舶靠港时关闭自身发电机，改用岸上电力。它是港口减少船舶靠泊期间碳排放和空气污染物的重要方式。",
+    link: "https://m.thepaper.cn/baijiahao_16725248",
+    image: "https://ts1.tc.mm.bing.net/th/id/R-C.afc144992b2a35171234f80c864056e5?rik=arbqiXh7OlYJgg&riu=http%3a%2f%2fwenhui.whb.cn%2fu%2fcms%2fwww%2f202304%2f23184626pze3.jpg&ehk=GUlfVxcuh4gmOHwIKfN0GO4W6lyME%2f7VxEZTDNMt5zA%3d&risl=&pid=ImgRaw&r=0",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 4,
+    type: "term",
+    title: "碳足迹 Carbon Footprint",
+    icon: "🌱",
+    detail: "港口运营过程中直接和间接产生的温室气体总量，核算对象包括装卸设备、港区运输、建筑用能以及外购电力等。碳足迹是绿色港口核算排放和制定减排措施的基础。",
+    link: "https://www.kepuchina.cn/article/articleinfo?business_type=100&ar_id=619924",
+    image: "https://ts1.tc.mm.bing.net/th/id/R-C.c4a03db386ae2eac48239abcf9da52b9?rik=g0zJRM3XBRoj6Q&riu=http%3a%2f%2fi8.hexun.com%2f2023-11-02%2f210920551.png&ehk=aEWP8PQN1yvJL2wSKP2syU7LFAA7wX0f4V61l05SPJE%3d&risl=&pid=ImgRaw&r=0",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 7,
+    type: "term",
+    title: "防风网 Windbreak Net",
+    icon: "🌀",
+    detail: "防风网是设置在煤堆场周围的大型网体，用于阻挡煤灰随风扩散，减少粉尘污染。",
+    link: "https://baike.baidu.com/item/防风网",
+    image: "https://ts1.tc.mm.bing.net/th/id/OIP-C.CsH19O2ODS21iyRo7AbJSAHaFj?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 8,
+    type: "term",
+    title: "水水中转 Water Transfer",
+    icon: "🛳️",
+    detail: "水水中转是指货物由大船换装到小船，全程不经过陆地，减少集卡运输和尾气排放。",
+    link: "https://baike.baidu.com/item/水水中转",
+    image: "https://ts1.tc.mm.bing.net/th/id/OIP-C.ml0gCZq0NQKM7RxMz7lLZwHaFj?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 9,
+    type: "term",
+    title: "海铁联运 Sea-Rail Intermodal Transport",
+    icon: "🛤️",
+    detail: "海铁联运是指货物下船后直接装上火车，由铁路完成后续运输，比公路运输更环保。",
+    link: "https://baike.baidu.com/item/海铁联运",
+    image: "https://ts1.tc.mm.bing.net/th/id/R-C.9967f6e84958e06a9fb9b51fc4698a6e?rik=Bser02UD6IRjxw&riu=http%3a%2f%2fvip-public.people.com.cn%2fphoto%2f2025%2f7%2f2%2f7c7f6886ba49491f9ebb2e002f52f938jsw6_m.jpg&ehk=b%2bRYN7eNq%2fhj3wH1ldg0xncnMFduts7%2bzgPp6Hyi9lE%3d&risl=&pid=ImgRaw&r=0",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 10,
+    type: "term",
+    title: "近零碳港区 Near-Zero Carbon Port Area",
+    icon: "🌱",
+    detail: "近零碳港区就是通过优化运输结构、用节能技术、替换清洁能源、加强碳管理，让整个港区一年的二氧化碳排放量几乎降到零。注意是\"趋近于零\"不是绝对零，就是能减的都减了，剩下少量再通过其他方式抵消。",
+    link: "http://www.bzfxw.com/TB/1115512.html",
+    image: "https://aka.doubaocdn.com/s/6X8gcDa1Pr",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 11,
+    type: "term",
+    title: "零碳码头 Zero-Carbon Terminal",
+    icon: "🏗️",
+    detail: "零碳码头就是码头所有作业设备（岸桥、场桥等）全用电，而且用的电全部来自风电、光伏等绿色能源，不需要烧煤烧油。",
+    link: "https://paper.people.com.cn/rmrb/pc/content/202507/19/content_30088851.html",
+    image: "https://aka.doubaocdn.com/s/EtOUWUzvtn",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 12,
+    type: "term",
+    title: "绿色航运走廊 Green Shipping Corridor",
+    icon: "🛳️",
+    detail: "绿色航运走廊不是一个港口，而是一条海上航线。这条航线的起点港和终点港都做绿色化改造（岸电、绿色燃料加注），船上也用零碳燃料，整条航线从头到尾都是低碳的。",
+    link: "http://www.ningbo.gov.cn/col/col1229196404/art/2026/art_92dc89fa5a2668f275e465f2f5661bdb.html",
+    image: "https://aka.doubaocdn.com/s/0Pf23UDqPQ",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 5,
+    type: "job",
+    title: "绿色低碳管理岗",
+    icon: "🧭",
+    detail: " 负责绿色港口建设与评价、能源消耗与技术统计报表填报、技术及能耗指标异动分析与测算、节能减排举措协调与统计、绿色低碳与科技创新项目统筹，并参与制度体系修编及履行岗位安全职责；适合港口与航运管理、能源与动力工程、环境工程、低碳经济与可持续发展、统计学或数据管理等相关专业关注。",
+    link: "https://www.iguopin.com/job/detail?id=218795892839285012#:~:text=%E6%8B%9B%E8%81%98%E5%8D%95%E4%BD%8D%EF%BC%9A%E6%B5%B7%E5%8D%97%E6%B8%AF%E8%88%AA%E5%9B%BD%E9%99%85%E6%B8%AF%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%20%E3%80%90%E5%B2%97%E4%BD%8D%E8%81%8C%E8%B4%A3%E3%80%91%201.%E8%B4%9F%E8%B4%A3%E7%BB%BF%E8%89%B2%E6%B8%AF%E5%8F%A3%E5%BB%BA%E8%AE%BE%E3%80%81%E8%AF%84%E4%BB%B7%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E3%80%82%202.%E8%B4%9F%E8%B4%A3%E5%A1%AB%E6%8A%A5%E8%83%BD%E6%BA%90%E6%B6%88%E8%80%97%E3%80%81%E6%8A%80%E6%9C%AF%E7%BB%9F%E8%AE%A1%E7%AD%89%E7%9B%B8%E5%85%B3%E6%8A%A5%E8%A1%A8%E3%80%82%203.%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90%E5%90%84%E7%B1%BB%E6%8A%80%E6%9C%AF%E6%8C%87%E6%A0%87%E3%80%81%E8%83%BD%E8%80%97%E6%8C%87%E6%A0%87%E5%BC%82%E5%8A%A8%E6%83%85%E5%86%B5%E3%80%82%204.%E8%B4%9F%E8%B4%A3%E6%B5%8B%E7%AE%97%E5%90%84%E9%A1%B9%E8%83%BD%E8%80%97%E6%8C%87%E6%A0%87%EF%BC%8C%E7%A1%AE%E4%BF%9D%E5%AE%8C%E6%88%90%E8%80%83%E6%A0%B8%E6%8C%87%E6%A0%87%E3%80%82,5.%E5%8D%8F%E8%B0%83%E6%94%B6%E9%9B%86%E5%85%AC%E5%8F%B8%E5%90%84%E9%83%A8%E9%97%A8%E8%8A%82%E8%83%BD%E5%87%8F%E6%8E%92%E4%B8%BE%E6%8E%AA%EF%BC%8C%E9%85%8D%E5%90%88%E4%B8%8A%E7%BA%A7%E5%A1%AB%E6%8A%A5%E7%9B%B8%E5%85%B3%E8%8A%82%E8%83%BD%E5%87%8F%E6%8E%92%E7%BB%9F%E8%AE%A1%E8%A1%A8%E3%80%82%206.%E8%B4%9F%E8%B4%A3%E7%BB%BF%E8%89%B2%E4%BD%8E%E7%A2%B3%E9%A1%B9%E7%9B%AE%E5%92%8C%E7%A7%91%E6%8A%80%E5%88%9B%E6%96%B0%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%BB%9F%E7%AD%B9%E5%B7%A5%E4%BD%9C%E3%80%82%207.%E5%8F%82%E4%B8%8E%E4%BF%AE%E7%BC%96%E5%85%AC%E5%8F%B8%E5%88%B6%E5%BA%A6%E3%80%81%E4%BD%93%E7%B3%BB%E3%80%82%208.%E5%B1%A5%E8%A1%8C%E6%9C%AC%E5%B2%97%E4%BD%8D%E7%9A%84%E5%AE%89%E5%85%A8%E8%81%8C%E8%B4%A3%E3%80%82%20%E3%80%90%E4%BB%BB%E8%81%8C%E8%A6%81%E6%B1%82%E3%80%91%201.%E6%95%99%E8%82%B2%E8%83%8C%E6%99%AF%EF%BC%9A%E5%A4%A7%E5%AD%A6%E6%9C%AC%E7%A7%91%E5%8F%8A%E4%BB%A5%E4%B8%8A%E5%AD%A6%E5%8E%86%EF%BC%8C%E8%83%BD%E6%BA%90%E4%B8%8E%E5%8A%A8%E5%8A%9B%E5%B7%A5%E7%A8%8B%E3%80%81%E8%83%BD%E6%BA%90%E4%B8%8E%E7%8E%AF%E5%A2%83%E7%B3%BB%E7%BB%9F%E5%B7%A5%E7%A8%8B%E3%80%81%E6%96%B0%E8%83%BD%E6%BA%90%E7%A7%91%E5%AD%A6%E4%B8%8E%E5%B7%A5%E7%A8%8B%E3%80%81%E5%82%A8%E8%83%BD%E7%A7%91%E5%AD%A6%E4%B8%8E%E5%B7%A5%E7%A8%8B%E3%80%81%E8%83%BD%E6%BA%90%E6%9C%8D%E5%8A%A1%E5%B7%A5%E7%A8%8B%E3%80%81%E5%8F%AF%E6%8C%81%E7%BB%AD%E8%83%BD%E6%BA%90%E7%AD%89%E7%9B%B8%E5%85%B3%E4%B8%93%E4%B8%9A%E3%80%82",
+    image: "",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  },
+  {
+    id: 6,
+    type: "job",
+    title: "碳排放核算专员",
+    icon: "📊",
+    detail: "负责温室气体盘查、排放因子应用、数据质量管理及减排报告编制，熟悉 Excel 和基础统计会很有帮助。",
+    link: "",
+    image: "",
+    qrLink: "",
+    views: 0,
+    weekViews: 0,
+    monthViews: 0,
+    favorites: 0,
+    date: "2026-03-10"
+  }
+];
