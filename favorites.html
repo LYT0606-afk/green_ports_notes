@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#164b3b">
+  <title>我的收藏｜绿港小贴士</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="favorites">
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">✦</span><span>绿港小贴士<small>校园信息服务平台</small></span></a>
+    <nav class="main-nav" aria-label="主导航"><a href="index.html#wall">便利贴墙</a><a href="ranking.html">人气排行</a><a href="carbon.html">碳足迹测算</a><a class="active" href="favorites.html">我的收藏</a><a href="index.html#about">关于项目</a></nav>
+    <div class="account-area"><a class="auth-button" href="login.html" data-auth-guest>登录</a><a class="auth-button" href="register.html" data-auth-guest>注册</a><span data-auth-greeting hidden></span><button class="auth-button" type="button" data-auth-logout hidden>退出</button></div>
+  </header>
+  <main class="account-content">
+    <p class="eyebrow">MY NOTE COLLECTION</p><h1>我的收藏</h1>
+    <p class="page-lede" id="favoritesOwner">登录后查看你的知识收藏夹</p>
+    <p id="favoritesLogin" class="page-lede"><a href="login.html">登录</a>或<a href="register.html">注册</a>，把好知识保存到自己的账号下。</p>
+    <div class="section-heading"><h2>收藏便利贴</h2><span class="results-count" id="resultsCount">00 NOTES</span></div>
+    <div class="toolbar">
+      <div class="filter-tabs" role="tablist" aria-label="收藏分类">
+        <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">全部 <span data-filter-count="all">00</span></button>
+        <button class="filter-tab" data-filter="policy" role="tab" aria-selected="false">政策 <span data-filter-count="policy">00</span></button>
+        <button class="filter-tab" data-filter="term" role="tab" aria-selected="false">术语 <span data-filter-count="term">00</span></button>
+        <button class="filter-tab" data-filter="industry" role="tab" aria-selected="false">行业黄页 <span data-filter-count="industry">00</span></button>
+        <button class="filter-tab" data-filter="job" role="tab" aria-selected="false">岗位观察 <span data-filter-count="job">00</span></button>
+        <button class="filter-tab" data-filter="law" role="tab" aria-selected="false">普法 <span data-filter-count="law">00</span></button>
+      </div>
+      <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="搜索我的收藏" aria-label="搜索我的收藏"></label>
+    </div>
+    <div class="note-wall" id="noteWall" aria-live="polite"></div>
+    <div class="empty-state" id="emptyState" hidden><h3 id="emptyTitle">请先登录</h3><p id="emptyDescription">收藏按账号保存，登录后才能查看。</p></div>
+    <a class="page-back" href="index.html#wall">← 返回便利贴墙</a>
+  </main>
+  <footer><span>© 2026 绿港小贴士</span><span>SHANGHAI MARITIME UNIVERSITY</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/data.js?v=cosco-image-v1"></script><script src="js/auth.js"></script><script src="js/main.js"></script>
+</body>
+</html>

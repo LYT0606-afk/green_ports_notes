@@ -8,13 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=carbon-share-v2">
 </head>
 <body class="carbon-page">
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="返回绿港小贴士首页"><span class="brand-mark">✦</span><span>绿港小贴士<small>校园信息服务平台</small></span></a>
-    <nav class="main-nav" aria-label="主导航"><a href="index.html#wall">便利贴墙</a><a href="index.html#ranking">人气排行</a><a class="active" href="carbon.html">碳足迹测算</a><a href="index.html#about">关于项目</a></nav>
-    <a class="carbon-back-link" href="index.html">返回墙面</a>
+    <nav class="main-nav" aria-label="主导航"><a href="index.html#wall">便利贴墙</a><a href="ranking.html">人气排行</a><a class="active" href="carbon.html">碳足迹测算</a><a href="favorites.html">我的收藏</a><a href="index.html#about">关于项目</a></nav>
+    <div class="account-area"><a class="auth-button" href="login.html" data-auth-guest>登录</a><a class="auth-button" href="register.html" data-auth-guest>注册</a><span data-auth-greeting hidden></span><button class="auth-button" type="button" data-auth-logout hidden>退出</button></div>
   </header>
 
   <main>
@@ -36,20 +36,57 @@
 
       <section class="carbon-result carbon-panel" id="carbonResult" hidden aria-live="polite">
         <div class="carbon-panel-heading"><div><p class="eyebrow">YOUR IMPACT</p><h2>这趟出行留下了</h2></div><span class="result-mode" id="resultMode">地铁</span></div>
-        <div class="impact-number"><strong id="emissionValue">0.00</strong><span>kg CO₂</span></div>
+        <div class="impact-summary">
+          <div class="impact-number"><strong id="emissionValue">0.00</strong><span>kg CO₂</span></div>
+          <div class="impact-ring" id="impactRing" role="img" aria-label="本次排放占低碳目标的比例">
+            <div class="impact-ring-center"><strong id="targetPercent">0%</strong><span>目标使用率</span></div>
+          </div>
+        </div>
+        <p class="target-caption">低碳参考目标：1 kg CO₂ / 次</p>
         <p class="impact-copy" id="impactCopy">每一次选择，都在改变城市的呼吸。</p>
-        <div class="impact-comparison"><span class="comparison-icon">🌳</span><p>相当于种了 <strong id="treeValue">0</strong> 棵树才能抵消<br><small>按 1 棵树每年吸收 18.3 kg CO₂ 计算</small></p></div>
+        <p class="impact-rating" id="impactRating"></p>
+        <div class="impact-comparisons">
+          <div class="impact-comparison"><span class="comparison-icon">🌳</span><p>约需 <strong id="treeValue">0</strong> 棵树吸收一年以抵消<br><small>按每棵树每年吸收 18.3 kg CO₂ 估算</small></p></div>
+          <div class="impact-comparison"><span class="comparison-icon">🚗</span><p>约等于少开燃油车 <strong id="carDistanceValue">0</strong> km 的排放<br><small>按本站汽车排放因子 0.19 kg CO₂/km 估算</small></p></div>
+          <div class="impact-comparison"><span class="comparison-icon">⚡</span><p>约等于少用电 <strong id="electricityValue">0</strong> 度的排放<br><small>按示例电力因子 0.57 kg CO₂/kWh 估算</small></p></div>
+        </div>
+        <div class="carbon-points-row"><span>本次获得 <strong id="earnedPoints">0</strong> 分</span><span>我的碳积分 <strong id="totalPoints">0</strong></span></div>
         <div class="advice-box"><span>绿色建议</span><p id="adviceText"></p></div>
         <div class="history-row"><span>历史累计碳排放</span><strong><span id="historyValue">0.00</span> kg CO₂</strong></div>
-        <button class="clear-history" id="clearHistory" type="button">清空记录</button>
+        <div class="result-actions"><button class="share-carbon" id="shareCarbon" type="button">生成分享卡片</button><button class="clear-history" id="clearHistory" type="button">清空记录和积分</button></div>
+        <p class="share-status" id="shareStatus" role="status" aria-live="polite"></p>
       </section>
     </section>
 
     <section class="chart-panel carbon-panel" id="chartPanel" hidden><div class="carbon-panel-heading"><div><p class="eyebrow">EMISSION COMPARISON</p><h2>同样距离下的交通方式比较</h2><p class="chart-subtitle">按本次总距离估算每人碳排放；本次选择的方式以绿色标出</p></div><span class="chart-distance" id="chartDistance"></span></div><div class="chart-wrap"><canvas id="carbonChart" aria-label="全部交通方式碳排放对比图"></canvas></div></section>
-    <p class="carbon-footnote">排放因子参考 IPCC 及公开资料，仅供参考。</p>
+    <section class="chart-panel carbon-panel carbon-history-panel" id="carbonHistoryPanel">
+      <div class="carbon-panel-heading">
+        <div><p class="eyebrow">YOUR CARBON JOURNAL</p><h2>我的碳积分与近 7 天趋势</h2><p class="chart-subtitle">每次积分 = 100 ÷（1 + 本次排放 kg），保留两位小数；排放越低，积分越高</p></div>
+        <div class="points-total"><strong id="historyPoints">0</strong><span>累计积分</span></div>
+      </div>
+      <p class="trend-empty" id="trendEmpty">完成一次碳足迹计算后，这里会显示近 7 天的排放趋势。</p>
+      <p class="trend-error" id="trendError" hidden>趋势图暂不可用，请检查网络连接；历史数据仍会保留。</p>
+      <div class="chart-wrap trend-chart-wrap" id="trendChartWrap" hidden><canvas id="carbonTrendChart" aria-label="最近七天每日碳排放趋势折线图"></canvas></div>
+    </section>
+    <p class="carbon-footnote">排放因子用于估算与比较，不等同于实测值；电力对比按示例因子 0.57 kg CO₂/kWh 计算，实际结果会因地区和年份而异。</p>
+    <div class="share-card-stage" aria-hidden="true">
+      <section class="share-card" id="shareCard">
+        <p class="share-brand"><span>🌿</span> 绿港小贴士</p>
+        <p class="share-eyebrow">GREEN MOBILITY / MY TRIP</p>
+        <h2>我的绿色出行记录</h2>
+        <p class="share-route" id="shareRoute"></p>
+        <p class="share-mode" id="shareMode"></p>
+        <p class="share-emission"><strong id="shareEmission">0.00</strong><span> kg CO₂</span></p>
+        <p class="share-slogan" id="shareSlogan"></p>
+        <div class="share-footer"><div><strong>每一次低碳选择<br>都让城市更轻盈</strong><small>绿港小贴士 · 绿色出行工具</small></div><div class="share-qr-wrap"><div id="shareQr"></div><small>扫码了解更多</small></div></div>
+      </section>
+    </div>
   </main>
+  <script src="js/auth.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="js/map-config.js"></script>
-  <script src="js/carbon.js"></script>
+  <script src="js/carbon.js?v=carbon-history-share-v4"></script>
 </body>
 </html>

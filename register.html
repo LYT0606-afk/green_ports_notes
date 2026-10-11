@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
+  <title>注册｜绿港小贴士</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+  <main class="auth-wrapper">
+    <div class="auth-card">
+      <section class="auth-brand" aria-label="绿港小贴士">
+        <a class="auth-home" href="index.html">← 返回便利贴墙</a>
+        <span class="auth-brand-icon" aria-hidden="true">🌿</span>
+        <h1>绿港小贴士</h1>
+        <p>绿色港口信息便利贴校园服务平台</p>
+        <p class="auth-brand-copy">建立你的知识收藏夹，一起探索绿色港航。</p>
+      </section>
+      <form class="auth-form" id="registerForm">
+        <h2>加入绿港</h2>
+        <p class="auth-subtitle">注册后即可拥有自己的便利贴收藏夹</p>
+        <div class="input-group"><label for="username">用户名</label><input id="username" name="username" type="text" autocomplete="nickname" minlength="2" maxlength="24" placeholder="2–24 个字符" required></div>
+        <div class="input-group"><label for="email">邮箱</label><input id="email" name="email" type="email" autocomplete="username" maxlength="254" placeholder="请输入邮箱" required></div>
+        <div class="input-group"><label for="password">密码</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="6" maxlength="128" placeholder="6–128 个字符，请使用演示密码" required></div>
+        <div class="input-group"><label for="confirmPassword">确认密码</label><input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="6" maxlength="128" placeholder="再次输入密码" required></div>
+        <p id="authMessage" class="auth-message" role="alert" hidden></p>
+        <button class="btn-login" type="submit">注 册</button>
+        <p class="auth-switch">已有账号？<a href="login.html">去登录</a></p>
+        <p class="auth-demo-note">仅用于本地演示：不验证邮箱，密码仅作 Base64 可逆编码，并非加密。请勿使用真实密码。账号和收藏仅保存在当前浏览器，不跨设备同步；注册成功会自动保持登录。</p>
+      </form>
+    </div>
+  </main>
+  <script src="js/auth.js"></script>
+</body>
+</html>

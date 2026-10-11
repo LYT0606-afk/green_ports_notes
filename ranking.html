@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#164b3b">
+  <title>人气排行｜绿港小贴士</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="ranking">
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">✦</span><span>绿港小贴士<small>校园信息服务平台</small></span></a>
+    <nav class="main-nav" aria-label="主导航"><a href="index.html#wall">便利贴墙</a><a class="active" href="ranking.html">人气排行</a><a href="carbon.html">碳足迹测算</a><a href="favorites.html">我的收藏</a><a href="index.html#about">关于项目</a></nav>
+    <div class="account-area"><a class="auth-button" href="login.html" data-auth-guest>登录</a><a class="auth-button" href="register.html" data-auth-guest>注册</a><span data-auth-greeting hidden></span><button class="auth-button" type="button" data-auth-logout hidden>退出</button></div>
+  </header>
+  <main class="account-content">
+    <p class="eyebrow">MOST USED</p><h1>人气排行榜</h1>
+    <p class="page-lede">看看哪些知识最受关注。本地演示排行仅统计当前浏览器数据，不代表全站实时排行。</p>
+    <section class="side-panel standalone-ranking" aria-label="便利贴人气排行">
+      <div class="ranking-tabs" role="tablist" aria-label="排行榜周期"><button class="ranking-tab active" data-ranking="week" role="tab" aria-selected="true">本周</button><button class="ranking-tab" data-ranking="month" role="tab" aria-selected="false">本月</button><button class="ranking-tab" data-ranking="favorites" role="tab" aria-selected="false">收藏</button></div>
+      <ol class="ranking-list" id="rankingList" data-full="true"></ol>
+      <div class="category-ranking"><div class="category-ranking-heading"><span>分类人气</span><small id="categoryRankingLabel">本周取用</small></div><div id="categoryRankingList"></div></div>
+    </section>
+    <a class="page-back" href="index.html#wall">← 返回便利贴墙</a>
+  </main>
+  <footer><span>© 2026 绿港小贴士</span><span>SHANGHAI MARITIME UNIVERSITY</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/data.js?v=cosco-image-v1"></script><script src="js/auth.js"></script><script src="js/main.js"></script>
+</body>
+</html>
