@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-labelledby="title desc">
+  <title id="title">岸电示意图</title>
+  <desc id="desc">船舶靠港接入岸电设施的绿色港口示意图</desc>
+  <rect width="900" height="560" fill="#dcefe4"/>
+  <circle cx="760" cy="115" r="58" fill="#f4d464"/>
+  <path d="M0 390 C180 350 290 405 460 370 S730 345 900 382 V560 H0Z" fill="#8ec4b0"/>
+  <path d="M0 440 C190 405 340 460 515 425 S750 405 900 440 V560 H0Z" fill="#4c9780"/>
+  <path d="M90 300h525l70 88H35z" fill="#164b3b"/>
+  <path d="M170 300V185h145v115M395 300V160h145v140" fill="#f5f7f1" stroke="#164b3b" stroke-width="12"/>
+  <path d="M615 388h135v-118h-55v-44h-40v44h-40z" fill="#f4d464" stroke="#164b3b" stroke-width="10"/>
+  <path d="M585 335h-90" stroke="#e46e4d" stroke-width="9" stroke-dasharray="18 13"/>
+  <text x="64" y="95" fill="#164b3b" font-family="Arial, sans-serif" font-size="38" font-weight="700">SHORE POWER</text>
+  <text x="68" y="135" fill="#3e7b3c" font-family="Arial, sans-serif" font-size="20">绿色港口岸电连接示意</text>
+</svg>

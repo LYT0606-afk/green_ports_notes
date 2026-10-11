@@ -1,125 +1,235 @@
-const authState = { user: null, client: null };
-const authModal = document.querySelector("#authModal");
-const authStatus = document.querySelector("#authStatus");
-const authButton = document.querySelector("#authButton");
-const authForm = document.querySelector("#authForm");
-const authMessage = document.querySelector("#authMessage");
-const phoneInput = document.querySelector("#phoneInput");
-const otpInput = document.querySelector("#otpInput");
-const otpLabel = document.querySelector("#otpLabel");
-const authSubmit = document.querySelector("#authSubmit");
-const authResend = document.querySelector("#authResend");
-let pendingPhone = "";
-let codeSent = false;
+// Local demo only: btoa is reversible encoding, not password encryption.
+// users contains username/email/passwordEncoded/favorites; currentUser never contains a password.
+// Remembered sessions use localStorage, other sessions use sessionStorage. Old guest favorites stay unassigned.
+(() => {
+  const usersKey = "users";
+  const currentUserKey = "currentUser";
 
-function supabaseReady() {
-  return Boolean(window.SUPABASE_CONFIG?.url && window.SUPABASE_CONFIG?.anonKey && window.supabase?.createClient);
-}
-
-function showAuthModal(message = "登录后可以收藏和取用便利贴") {
-  authMessage.textContent = message;
-  authModal.hidden = false;
-  (codeSent ? otpInput : phoneInput).focus();
-}
-
-function closeAuthModal() { authModal.hidden = true; }
-
-function resetAuthForm() {
-  codeSent = false;
-  pendingPhone = "";
-  otpInput.value = "";
-  otpInput.hidden = true;
-  otpLabel.hidden = true;
-  authResend.hidden = true;
-  phoneInput.readOnly = false;
-  authSubmit.innerHTML = "发送验证码 <span>→</span>";
-}
-
-async function refreshAuthUser() {
-  if (!authState.client) return;
-  const { data } = await authState.client.auth.getUser();
-  setAuthUser(data.user || null);
-}
-
-function setAuthUser(user) {
-  authState.user = user;
-  if (user) {
-    authStatus.textContent = user.phone || user.email || "已登录";
-    authButton.textContent = "退出登录";
-    authButton.dataset.action = "logout";
-  } else {
-    authStatus.textContent = "游客浏览中";
-    authButton.textContent = "登录";
-    authButton.dataset.action = "login";
+  function readJSON(storage, key, emptyValue) {
+    const value = storage.getItem(key);
+    if (value === null) return emptyValue;
+    try {
+      return JSON.parse(value);
+    } catch (error) {
+      throw new Error(`本地 ${key} 数据无法读取，请先备份数据再清理损坏记录。`, { cause: error });
+    }
   }
-}
 
-async function sendPhoneCode(phone) {
-  if (!authState.client) {
-    authMessage.textContent = "请先在 js/supabase-config.js 填写项目配置，当前仍可游客浏览。";
-    return;
+  function readUsers() {
+    const users = readJSON(localStorage, usersKey, []);
+    if (!Array.isArray(users) || users.some(user =>
+      !user || typeof user.username !== "string" || typeof user.email !== "string" ||
+      typeof user.passwordEncoded !== "string" || !Array.isArray(user.favorites) ||
+      user.favorites.some(id => !Number.isInteger(id))
+    )) {
+      throw new Error("本地用户数据格式不正确，请先备份数据再处理，不能继续登录或保存收藏。");
+    }
+    return users;
   }
-  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-    authMessage.textContent = "手机号请使用国际格式，例如中国大陆号码 +8613800000000。";
-    return;
+
+  function reportError(error) {
+    console.error("绿港小贴士账号操作失败", error);
+    let message = document.querySelector("#authMessage");
+    if (!message) {
+      message = document.querySelector("#accountNotice");
+      if (!message) {
+        message = document.createElement("p");
+        message.id = "accountNotice";
+        message.className = "account-notice";
+        message.setAttribute("role", "alert");
+        document.querySelector("main").before(message);
+      }
+    }
+    message.textContent = error instanceof Error ? error.message : "账号操作失败，请检查浏览器存储权限。";
+    message.hidden = false;
   }
-  const { error } = await authState.client.auth.signInWithOtp({ phone });
-  if (error) {
-    authMessage.textContent = error.message;
-    return;
+
+  function getCurrentUser() {
+    const current = readJSON(sessionStorage, currentUserKey, null) ||
+      readJSON(localStorage, currentUserKey, null);
+    if (current === null) return null;
+    if (typeof current.email !== "string" || typeof current.username !== "string") {
+      throw new Error("当前登录记录格式不正确，请先备份并清理 currentUser 记录。");
+    }
+    const user = readUsers().find(item => item.email === current.email && item.username === current.username);
+    return user ? { username: user.username, email: user.email } : null;
   }
-  pendingPhone = phone;
-  codeSent = true;
-  phoneInput.readOnly = true;
-  otpInput.hidden = false;
-  otpLabel.hidden = false;
-  authResend.hidden = false;
-  authSubmit.innerHTML = "验证并登录 <span>→</span>";
-  authMessage.textContent = `验证码已发送至 ${phone}，请输入短信中的验证码。`;
-  otpInput.focus();
-}
 
-async function verifyPhoneCode(token) {
-  if (!authState.client || !pendingPhone) return;
-  const { data, error } = await authState.client.auth.verifyOtp({ phone: pendingPhone, token, type: "sms" });
-  if (error) {
-    authMessage.textContent = error.message;
-    return;
+  function isLoggedIn() { return getCurrentUser() !== null; }
+
+  function updateNavigation() {
+    const user = getCurrentUser();
+    document.querySelectorAll("[data-auth-guest]").forEach(element => { element.hidden = Boolean(user); });
+    document.querySelectorAll("[data-auth-greeting]").forEach(element => {
+      element.hidden = !user;
+      element.textContent = user ? `你好，${user.username}` : "";
+      element.title = user ? `你好，${user.username}` : "";
+    });
+    document.querySelectorAll("[data-auth-logout]").forEach(element => { element.hidden = !user; });
+    const favoritesLogin = document.querySelector("#favoritesLogin");
+    if (favoritesLogin) favoritesLogin.hidden = Boolean(user);
   }
-  setAuthUser(data.user || null);
-  closeAuthModal();
-  resetAuthForm();
-}
 
-async function signOut() {
-  if (authState.client) await authState.client.auth.signOut();
-  setAuthUser(null);
-}
+  function notifyAccountChange() {
+    updateNavigation();
+    document.dispatchEvent(new CustomEvent("accountchange"));
+  }
 
-window.requireLogin = function requireLogin(action) {
-  if (authState.user) return true;
-  showAuthModal(action === "favorite" ? "登录后才能收藏便利贴" : "登录后才能记录取用次数");
-  return false;
-};
+  function loginUser(user, remember) {
+    const current = JSON.stringify({ username: user.username, email: user.email });
+    if (remember) {
+      localStorage.setItem(currentUserKey, current);
+      sessionStorage.removeItem(currentUserKey);
+    } else {
+      sessionStorage.setItem(currentUserKey, current);
+      localStorage.removeItem(currentUserKey);
+    }
+    notifyAccountChange();
+  }
 
-if (supabaseReady()) {
-  authState.client = window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.anonKey);
-  authState.client.auth.onAuthStateChange((_event, session) => setAuthUser(session?.user || null));
-  refreshAuthUser();
-} else {
-  setAuthUser(null);
-}
+  function logout() {
+    try {
+      sessionStorage.removeItem(currentUserKey);
+      localStorage.removeItem(currentUserKey);
+      notifyAccountChange();
+    } catch (error) {
+      reportError(error);
+    }
+  }
 
-authButton.addEventListener("click", () => {
-  if (authButton.dataset.action === "logout") signOut();
-  else showAuthModal();
-});
-document.querySelector("#authClose").addEventListener("click", closeAuthModal);
-authModal.addEventListener("click", event => { if (event.target === authModal) closeAuthModal(); });
-authForm.addEventListener("submit", event => {
-  event.preventDefault();
-  if (codeSent) verifyPhoneCode(otpInput.value.trim());
-  else sendPhoneCode(phoneInput.value.replace(/[\s()-]/g, ""));
-});
-authResend.addEventListener("click", () => sendPhoneCode(pendingPhone));
-authModal.addEventListener("keydown", event => { if (event.key === "Escape") closeAuthModal(); });
+  function requireLogin() {
+    try {
+      if (isLoggedIn()) return true;
+      window.alert("请先登录");
+      window.location.assign("login.html");
+    } catch (error) {
+      reportError(error);
+    }
+    return false;
+  }
+
+  function getFavoriteIds() {
+    const user = getCurrentUser();
+    return user ? [...readUsers().find(item => item.email === user.email).favorites] : [];
+  }
+
+  function saveFavoriteIds(ids) {
+    const current = getCurrentUser();
+    if (!current) throw new Error("请先登录，再保存收藏。");
+    if (!Array.isArray(ids) || ids.some(id => !Number.isInteger(id))) {
+      throw new Error("收藏编号无效，未保存修改。");
+    }
+    const users = readUsers();
+    const user = users.find(item => item.email === current.email);
+    user.favorites = [...new Set(ids)];
+    localStorage.setItem(usersKey, JSON.stringify(users));
+    notifyAccountChange();
+  }
+
+  function getFavoriteCounts() {
+    const counts = {};
+    readUsers().forEach(user => {
+      [...new Set(user.favorites)].forEach(id => { counts[id] = (counts[id] || 0) + 1; });
+    });
+    return counts;
+  }
+
+  function encodePassword(password) {
+    const bytes = new TextEncoder().encode(password);
+    return btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join(""));
+  }
+
+  function normalizedEmail(input) {
+    const email = input.value.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("请输入有效的邮箱地址。");
+    return email;
+  }
+
+  function validatePassword(password) {
+    if (password.length < 6 || password.length > 128) throw new Error("密码长度须为 6–128 个字符。");
+  }
+
+  function bindForm(id, submit) {
+    const form = document.querySelector(id);
+    if (!form) return;
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      const button = form.querySelector('button[type="submit"]');
+      button.disabled = true;
+      document.querySelector("#authMessage").hidden = true;
+      try {
+        if (window.location.protocol === "file:") {
+          throw new Error("请通过本地 HTTP 服务器或 GitHub Pages 打开网站，再登录或注册；直接打开 HTML 文件无法可靠共享各页面的账号数据。");
+        }
+        submit(form);
+        window.location.assign("index.html");
+      } catch (error) {
+        reportError(error);
+        button.disabled = false;
+      }
+    });
+  }
+
+  window.isLoggedIn = isLoggedIn;
+  window.getCurrentUser = getCurrentUser;
+  window.logout = logout;
+  window.requireLogin = requireLogin;
+  window.GreenPortAuth = { getFavoriteIds, saveFavoriteIds, getFavoriteCounts, reportError };
+
+  bindForm("#loginForm", form => {
+    const email = normalizedEmail(form.elements.email);
+    const password = form.elements.password.value;
+    validatePassword(password);
+    const user = readUsers().find(item => item.email === email && item.passwordEncoded === encodePassword(password));
+    if (!user) throw new Error("邮箱或密码不正确；本地账号仅在注册时使用的浏览器和网站地址下有效。");
+    loginUser(user, form.elements.remember.checked);
+  });
+
+  bindForm("#registerForm", form => {
+    const username = form.elements.username.value.trim();
+    if (!/^[\p{L}\p{N}_ -]{2,24}$/u.test(username)) {
+      throw new Error("用户名须为 2–24 个字符，可使用中文、字母、数字、空格、下划线或短横线。");
+    }
+    const email = normalizedEmail(form.elements.email);
+    const password = form.elements.password.value;
+    validatePassword(password);
+    if (password !== form.elements.confirmPassword.value) throw new Error("两次输入的密码不一致。");
+    const users = readUsers();
+    if (users.some(user => user.email === email)) throw new Error("这个邮箱已经注册，请前往登录。");
+    if (users.some(user => user.username.toLowerCase() === username.toLowerCase())) {
+      throw new Error("这个用户名已被使用，请换一个用户名。");
+    }
+    const user = { username, email, passwordEncoded: encodePassword(password), favorites: [] };
+    users.push(user);
+    localStorage.setItem(usersKey, JSON.stringify(users));
+    loginUser(user, true);
+  });
+
+  document.querySelectorAll("[data-auth-logout]").forEach(button => button.addEventListener("click", logout));
+  const forgot = document.querySelector("#forgotPassword");
+  if (forgot) forgot.addEventListener("click", () => {
+    const message = document.querySelector("#authMessage");
+    message.textContent = "本地演示不提供邮箱验证或邮件找回密码。请勿使用真实账号密码；忘记演示账号密码时，可另注册一个演示账号，原账号收藏不会转移。";
+    message.hidden = false;
+  });
+
+  window.addEventListener("storage", event => {
+    if (![usersKey, currentUserKey, null].includes(event.key)) return;
+    try {
+      if (event.key === currentUserKey || event.key === null) sessionStorage.removeItem(currentUserKey);
+      notifyAccountChange();
+    } catch (error) {
+      reportError(error);
+    }
+  });
+
+  try {
+    readUsers();
+    updateNavigation();
+    if (window.location.protocol === "file:") {
+      reportError(new Error("账号跨页面功能需要通过本地 HTTP 服务器或 GitHub Pages 使用；直接打开 HTML 文件时，浏览器可能隔离各页面的存储。"));
+    }
+  } catch (error) {
+    reportError(error);
+  }
+})();
