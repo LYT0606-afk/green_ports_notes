@@ -1037,10 +1037,10 @@ const noteData = [
   organization: {
     englishName: "International Association of Ports and Harbors",
     organizationType: "国际非政府组织",
-    summary: "IAPH成立于1955年，总部位于东京，代表全球约190个港口和165家港口相关企业，覆盖89个国家。致力于推动港口脱碳、能源转型和数字化[citation:6]。",
+    summary: "IAPH成立于1955年，总部位于东京，代表全球约190个港口和165家港口相关企业，覆盖89个国家。致力于推动港口脱碳、能源转型和数字化。",
     greenDirections: ["港口脱碳", "能源转型", "数字化", "风险管理"],
     mainBusiness: "港口行业代表、政策倡导、国际标准对接、行业交流",
-    greenLayout: "主导港口脱碳与能源转型倡议，在IMO等国际组织中代表港口行业发声，推动绿色港口规则制定[citation:6]。",
+    greenLayout: "主导港口脱碳与能源转型倡议，在IMO等国际组织中代表港口行业发声，推动绿色港口规则制定。",
     representativeProject: "World Ports Conference、港口脱碳倡议",
     projectStage: "持续运行",
     newcomerFocus: "港口管理、国际航运政策、绿色港口标准",
@@ -1104,10 +1104,10 @@ const noteData = [
   organization: {
     englishName: "Green Marine International",
     organizationType: "环境认证机构（非营利）",
-    summary: "Green Marine是航运业领先的自愿性环境认证项目，2024年整合为Green Marine International，统一管理北美和欧洲认证项目。网络涵盖565+成员[citation:10]。",
+    summary: "Green Marine是航运业领先的自愿性环境认证项目，2024年整合为Green Marine International，统一管理北美和欧洲认证项目。网络涵盖565+成员。",
     greenDirections: ["环境认证", "生物多样性保护", "空气排放减排", "废物管理", "水下噪音"],
     mainBusiness: "环境认证、绩效评估、行业基准对比、最佳实践分享",
-    greenLayout: "2026年标准新增循环经济、微塑料管理、水下辐射噪音等指标，覆盖港口、船东、码头运营商。港口认证已在欧洲开放[citation:3]。",
+    greenLayout: "2026年标准新增循环经济、微塑料管理、水下辐射噪音等指标，覆盖港口、船东、码头运营商。港口认证已在欧洲开放。",
     representativeProject: "Green Marine年度认证项目、GreenTech会议",
     projectStage: "持续运行（已18年）",
     newcomerFocus: "环境认证体系、港口环境管理、航运可持续标准",
@@ -1137,10 +1137,10 @@ const noteData = [
   organization: {
     englishName: "Getting to Zero Coalition",
     organizationType: "国际联盟（多利益相关方）",
-    summary: "该联盟于2019年由Global Maritime Forum、Friends of Ocean Action和世界经济论坛共同发起，汇聚200+航运、能源、基础设施和金融领域组织，目标2030年前实现深海零排放船舶商业化运营[citation:4][citation:11]。",
+    summary: "该联盟于2019年由Global Maritime Forum、Friends of Ocean Action和世界经济论坛共同发起，汇聚200+航运、能源、基础设施和金融领域组织，目标2030年前实现深海零排放船舶商业化运营。",
     greenDirections: ["零排放船舶", "绿色走廊", "替代燃料", "政策倡导", "公正转型"],
     mainBusiness: "行业协作平台、政策倡导、绿色走廊推广、投资促进",
-    greenLayout: "推动绿色走廊发展、零排放船舶部署、碳定价倡导（如呼吁IMO实施150美元/吨碳税）。在印尼、墨西哥、南非开展国别项目[citation:4][citation:18]。",
+    greenLayout: "推动绿色走廊发展、零排放船舶部署、碳定价倡导（如呼吁IMO实施150美元/吨碳税）。在印尼、墨西哥、南非开展国别项目。",
     representativeProject: "Fueling the Future of Shipping研究、绿色走廊示范",
     projectStage: "持续运行（P4G资助已结束）",
     newcomerFocus: "航运脱碳政策、绿色走廊、零排放燃料",
@@ -1170,10 +1170,10 @@ const noteData = [
   organization: {
     englishName: "A.P. Moller-Maersk",
     organizationType: "跨国企业（航运）",
-    summary: "马士基是全球最大的集装箱航运公司之一，承诺2040年实现净零排放，2023年接收全球首艘甲醇动力集装箱船[citation:9]。",
+    summary: "马士基是全球最大的集装箱航运公司之一，承诺2040年实现净零排放，2023年接收全球首艘甲醇动力集装箱船。",
     greenDirections: ["绿色甲醇", "零排放船舶", "碳定价倡导", "脱碳物流"],
     mainBusiness: "集装箱运输、物流、码头运营",
-    greenLayout: "订购8艘大型甲醇动力集装箱船（每艘约16000 TEU），年减碳约100万吨。呼吁IMO实施150美元/吨航运燃料碳税[citation:9]。",
+    greenLayout: "订购8艘大型甲醇动力集装箱船（每艘约16000 TEU），年减碳约100万吨。呼吁IMO实施150美元/吨航运燃料碳税。",
     representativeProject: "全球首艘甲醇动力集装箱船、16000 TEU甲醇船队",
     projectStage: "已投入运营/扩展中",
     newcomerFocus: "绿色航运管理、替代燃料、航运脱碳战略",
@@ -1204,10 +1204,10 @@ const noteData = [
   organization: {
     englishName: "Port of Rotterdam Authority",
     organizationType: "港口管理机构（国有）",
-    summary: "鹿特丹港是欧洲最大的港口，致力于成为国际绿色氢能枢纽，参与Green Ports Partnership（荷兰-巴西合作项目）[citation:7]。",
+    summary: "鹿特丹港是欧洲最大的港口，致力于成为国际绿色氢能枢纽，参与Green Ports Partnership（荷兰-巴西合作项目）。",
     greenDirections: ["绿色氢能", "替代燃料", "岸电", "碳捕集", "循环经济"],
     mainBusiness: "港口运营、物流、工业、能源基础设施",
-    greenLayout: "建设大规模氢能网络，目标成为西北欧氢能进口、生产和转运枢纽。参与国际绿色走廊合作[citation:7]。",
+    greenLayout: "建设大规模氢能网络，目标成为西北欧氢能进口、生产和转运枢纽。参与国际绿色走廊合作。",
     representativeProject: "鹿特丹氢能枢纽、Green Ports Partnership",
     projectStage: "建设/运营中",
     newcomerFocus: "港口能源转型、氢能经济、绿色物流",
@@ -1237,10 +1237,10 @@ const noteData = [
   organization: {
     englishName: "International Green Shipping Corridor Alliance",
     organizationType: "国际非政府组织",
-    summary: "2026年9月由中远海运、达飞集团、上港集团、中国能建等联合发起，创始会员涵盖12国45家头部企业，业务覆盖绿色航运产业链上下游[citation:1][citation:8]。",
+    summary: "2026年9月由中远海运、达飞集团、上港集团、中国能建等联合发起，创始会员涵盖12国45家头部企业，业务覆盖绿色航运产业链上下游。",
     greenDirections: ["绿色航运走廊", "绿色燃料认证", "绿色港口", "国际标准对接"],
     mainBusiness: "国际绿色航运合作平台、标准衔接、示范项目、技术研发与成果转化",
-    greenLayout: "推动绿色船舶、绿色燃料、绿色港口的国内规则与国际标准衔接，加快绿色船用燃料国际认证体系建设[citation:1][citation:8]。",
+    greenLayout: "推动绿色船舶、绿色燃料、绿色港口的国内规则与国际标准衔接，加快绿色船用燃料国际认证体系建设。",
     representativeProject: "国际绿色航运走廊示范项目、绿色燃料认证体系",
     projectStage: "2026年新成立",
     newcomerFocus: "绿色航运走廊、国际航运政策、绿色燃料认证",
@@ -1270,10 +1270,10 @@ const noteData = [
   organization: {
     englishName: "Port of Yokohama",
     organizationType: "港口管理机构（日本）",
-    summary: "横滨港2025年凭《港湾脱碳化推进计划》入选IAPH可持续发展奖“气候与能源”类别决赛，是日本首次入围。计划涵盖121个官民合作项目[citation:14]。",
+    summary: "横滨港2025年凭《港湾脱碳化推进计划》入选IAPH可持续发展奖“气候与能源”类别决赛，是日本首次入围。计划涵盖121个官民合作项目。",
     greenDirections: ["港口脱碳", "碳中和管理", "官民合作", "绿色能源"],
     mainBusiness: "港口运营、物流、临港产业",
-    greenLayout: "2025年3月制定《横滨港港湾脱碳化推进计划》，推进碳中和管理，强化官民合作推进脱碳项目[citation:14]",
+    greenLayout: "2025年3月制定《横滨港港湾脱碳化推进计划》，推进碳中和管理，强化官民合作推进脱碳项目",
     representativeProject: "横滨港港湾脱碳化推进计划（121个官民合作项目）",
     projectStage: "推进中",
     newcomerFocus: "港口脱碳规划、官民合作机制、日本港口管理",
@@ -1304,10 +1304,10 @@ const noteData = [
   organization: {
     englishName: "Nippon Yusen Kaisha (NYK Line)",
     organizationType: "跨国企业（航运）",
-    summary: "NYK是日本领先的航运企业，深度参与国际航运脱碳进程，加入了零排放联盟、GCMD、全球CCS研究所、北太平洋绿色走廊联盟等多个国际倡议[citation:4]。",
+    summary: "NYK是日本领先的航运企业，深度参与国际航运脱碳进程，加入了零排放联盟、GCMD、全球CCS研究所、北太平洋绿色走廊联盟等多个国际倡议。",
     greenDirections: ["零排放燃料", "碳捕集与封存", "甲烷减排", "绿色走廊"],
     mainBusiness: "集装箱运输、散货运输、汽车运输、物流",
-    greenLayout: "加入Global CCS Institute推动碳捕集技术应用；参与MAMII倡议评估LNG动力船甲烷排放；支持北太平洋绿色走廊联盟推进加拿大与日韩间供应链脱碳[citation:4]",
+    greenLayout: "加入Global CCS Institute推动碳捕集技术应用；参与MAMII倡议评估LNG动力船甲烷排放；支持北太平洋绿色走廊联盟推进加拿大与日韩间供应链脱碳",
     representativeProject: "北太平洋绿色走廊联盟、MAMII甲烷减排倡议",
     projectStage: "参与/推进中",
     newcomerFocus: "航运脱碳战略、替代燃料、国际航运合作",
@@ -1326,5 +1326,138 @@ const noteData = [
   monthViews: 0,
   favorites: 0,
   date: "2026-10-11"
+}
+,
+{
+  id: 62,
+  type: "industry",
+  isTemplate: false,
+  title: "C40 Green Port Forum",
+  icon: "🌐",
+  detail: "全球大城市网络下的港口合作平台，专注绿色航运走廊与港口脱碳。",
+  organization: {
+    englishName: "C40 Green Port Forum",
+    organizationType: "国际城市合作网络（C40 Cities 旗下）",
+    summary: "C40是由全球主要城市组成的应对气候变化网络。其绿色港口论坛（Green Port Forum）汇集城市与港口，加速绿色航运走廊发展。2026年年会在巴塞罗那举行，聚焦MAGPIE项目（氨燃料加注、电池储能、电动卡车）的实践经验。",
+    greenDirections: ["绿色航运走廊", "氨燃料加注", "电池储能", "电动卡车", "港口脱碳"],
+    mainBusiness: "城市-港口合作、绿色走廊推广、最佳实践分享、创新方案落地",
+    greenLayout: "推动港口脱碳创新方案的可复制性，强调本地与国际环境创新生态系统的建设、创新融资机制、多层级利益相关方协调，以及港口社区的社会接受度",
+    representativeProject: "MAGPIE项目（欧洲港口能源转型路线图）",
+    projectStage: "持续运行",
+    newcomerFocus: "绿色航运走廊、港口脱碳政策、城市-港口协同治理",
+    source: "AIVP、C40 Green Port Forum",
+    verifiedDate: "2026-10-12",
+    imageSource: "公开新闻"
+  },
+  links: [
+    { label: "C40官网", url: "https://www.c40.org" }
+  ],
+  image: "https://ts2.tc.mm.bing.net/th/id/OIP-C.3etzIx6EIFeiLG3Lv1N_rgHaFj?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+  qrLink: "",
+  views: 0,
+  weekViews: 0,
+  monthViews: 0,
+  favorites: 0,
+  date: "2026-10-12"
+}
+,
+{
+  id: 63,
+  type: "industry",
+  isTemplate: false,
+  title: "Hamburg Port Authority",
+  icon: "⚓",
+  detail: "欧洲首个同时为集装箱船和邮轮提供岸电的港口，绿色能源枢纽先行者。",
+  organization: {
+    englishName: "Hamburg Port Authority (HPA)",
+    organizationType: "港口管理机构（德国公法机构）",
+    summary: "汉堡港是欧洲首个为集装箱船和邮轮同时提供岸电的港口。HPA于2024年成立Port Energy Solutions部门，聚焦岸电扩展、可持续能源枢纽和可再生能源三大方向。2026年与赫伯罗特签署岸电强制使用框架协议，覆盖所有主要集装箱码头。",
+    greenDirections: ["岸电", "绿色氢能", "可持续能源枢纽", "碳捕集", "可再生能源"],
+    mainBusiness: "港口基础设施管理、航运安全、港口能源解决方案",
+    greenLayout: "所有大型集装箱船和邮轮泊位已配备岸电设施，2030年前覆盖短途航运泊位，2027年前内河船舶等待泊位全部电气化。与汉堡能源公司合资成立EHH GmbH推动港口可再生能源扩展，2027年氢能管道将连接进口终端与国家氢能网络。",
+    representativeProject: "Sustainable Energy Hub、岸电网络扩建、dronePORT Hamburg",
+    projectStage: "建设/运营中",
+    newcomerFocus: "港口能源转型、岸电系统、氢能基础设施",
+    source: "HPA官网、2024年报、公开新闻",
+    verifiedDate: "2026-10-12",
+    imageSource: "HPA官网"
+  },
+  links: [
+    { label: "机构官网", url: "https://www.hamburg-port-authority.de" },
+    { label: "可持续发展页面", url: "https://www.hamburg-port-authority.de/en/hpa-360/sustainability/" }
+  ],
+  image: "https://ts2.tc.mm.bing.net/th/id/OIP-C.iNKeKkuvkLckBOajM-qp5AHaFj?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+  qrLink: "",
+  views: 0,
+  weekViews: 0,
+  monthViews: 0,
+  favorites: 0,
+  date: "2026-10-12"
+}
+,
+{
+  id: 64,
+  type: "industry",
+  isTemplate: false,
+  title: "Port of Antwerp-Bruges",
+  icon: "🇧🇪",
+  detail: "欧洲第二大港口，拥有欧洲首个开放接入工业余热网络和最大电动卡车充电枢纽。",
+  organization: {
+    englishName: "Port of Antwerp-Bruges",
+    organizationType: "港口管理机构（比利时公法公司）",
+    summary: "安特卫普-布鲁日港是欧洲第二大港口，定位为可持续未来的杠杆。拥有超过1700名员工，提供24/7客户导向服务。旗下拥有Railport、NxtPort、APEC培训中心等子公司，推动多式联运、数据交换和能源转型。",
+    greenDirections: ["工业余热回收", "电动卡车充电", "岸电", "甲醇加注", "电动拖轮"],
+    greenLayout: "2025年建成Warmtenetwerk Antwerpen Noord工业余热网络，预计年减碳8万吨，相当于1.25万户安特卫普家庭排放。2030年目标风力发电容量达0.5GW。拥有欧洲最大电动卡车充电枢纽Milence（10个充电桩，400kW）。2024年完成首次深海船舶甲醇加注，推出欧洲首艘全电动拖轮Volta 1和全球首艘甲醇动力拖轮Methatug。",
+    representativeProject: "Warmtenetwerk工业余热网络、Milence充电枢纽、Volta 1电动拖轮、NextGen District循环经济区",
+    projectStage: "运营/扩展中",
+    newcomerFocus: "港口循环经济、多式联运、电动重卡充电、替代燃料加注",
+    source: "安特卫普-布鲁日港官网、2025年报",
+    verifiedDate: "2026-10-12",
+    imageSource: "安特卫普-布鲁日港官网"
+  },
+  links: [
+    { label: "机构官网", url: "https://www.portofantwerpbruges.com" },
+    { label: "新闻中心", url: "https://newsroom.portofantwerpbruges.com" }
+  ],
+  image: "https://wpassets.porttechnology.org/wp-content/uploads/2022/10/10101202/000_027SKYVISION_foto_206-EuropaTerminal-scaled.jpg",
+  qrLink: "",
+  views: 0,
+  weekViews: 0,
+  monthViews: 0,
+  favorites: 0,
+  date: "2026-10-12"
+}
+,
+{
+  id: 65,
+  type: "industry",
+  isTemplate: false,
+  title: "AIVP (International Association of Cities and Ports)",
+  icon: "🏙️",
+  detail: "全球港口城市合作网络，推动城市-港口可持续关系与气候适应。",
+  organization: {
+    englishName: "AIVP (Association Internationale Villes et Ports)",
+    organizationType: "国际非营利组织",
+    summary: "AIVP成立于1988年，是全球领先的港口城市合作网络，拥有来自49个国家的190多个成员（50%港口管理机构、25%地方政府、25%经济与机构利益相关方）。2018年发布Agenda 2030，将联合国17个SDGs转化为10个目标、46项具体措施。",
+    greenDirections: ["气候适应", "能源转型", "生物多样性", "可持续交通", "港口治理"],
+    greenLayout: "2025年与Green Marine International续签合作备忘录，将AIVP的社会标准整合进Green Marine认证体系。气候适应承诺包含五个优先行动：城市-港口联合防洪规划、基于自然的岸线恢复、早期预警系统、应对干旱高温、将韧性与碳中和纳入设计运营。2026年在巴塞罗那参与C40 Green Port Forum，分享MAGPIE项目经验。",
+    representativeProject: "Agenda 2030、AIVP Prize Antoine Rufenacht、Reinventing Port Cities计划",
+    projectStage: "持续运行",
+    newcomerFocus: "港口城市治理、气候适应规划、城市-港口关系、国际港口合作",
+    source: "AIVP官网",
+    verifiedDate: "2026-10-12",
+    imageSource: "AIVP官网"
+  },
+  links: [
+    { label: "机构官网", url: "https://aivp.org" },
+    { label: "2030议程", url: "https://aivp.org/en/commitments/" }
+  ],
+  image: "https://ts3.tc.mm.bing.net/th/id/OIP-C.dD03yYCKM12YCUXlTV3brwHaDa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+  qrLink: "",
+  views: 0,
+  weekViews: 0,
+  monthViews: 0,
+  favorites: 0,
+  date: "2026-10-12"
 }
 ];

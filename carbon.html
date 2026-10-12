@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=carbon-share-v2">
+  <link rel="stylesheet" href="css/style.css?v=carbon-auto-route-v1">
 </head>
 <body class="carbon-page">
   <header class="site-header">
@@ -22,20 +22,21 @@
     <section class="carbon-layout">
       <form class="carbon-form carbon-panel" id="carbonForm">
         <div class="carbon-panel-heading"><div><p class="eyebrow">YOUR TRIP</p><h2>填写出行信息</h2></div><span class="form-step">01 / 01</span></div>
-        <label class="carbon-field">出发地<select id="originSelect"><option value="上海海事大学">上海海事大学</option><option value="临港大道地铁站">临港大道地铁站</option><option value="龙阳路地铁站">龙阳路地铁站</option><option value="custom">自定义输入</option></select></label>
-        <label class="carbon-field custom-place" id="originCustomField" hidden>自定义出发地<input id="originCustom" type="text" placeholder="例如：我的家"></label>
-        <label class="carbon-field">目的地<select id="destinationSelect"><option value="洋山港">洋山港</option><option value="外高桥港">外高桥港</option><option value="上海港国际客运中心">上海港国际客运中心</option><option value="custom">自定义输入</option></select></label>
-        <label class="carbon-field custom-place" id="destinationCustomField" hidden>自定义目的地<input id="destinationCustom" type="text" placeholder="例如：学校图书馆"></label>
-        <div class="segment-heading"><span>交通方式与距离</span><small>可添加换乘路段</small></div>
-        <div id="transportSegments" class="transport-segments"><div class="transport-segment" data-segment><label class="carbon-field">方式<select class="segment-mode"><option value="walk">步行</option><option value="bike">自行车</option><option value="subway">地铁</option><option value="bus">公交</option><option value="highspeed">高铁</option><option value="train">火车</option><option value="eBike">电动车</option><option value="car">汽车</option><option value="plane">飞机</option></select></label><label class="carbon-field">距离（km）<input class="segment-distance" type="number" min="0" max="10000" step="0.1" inputmode="decimal" placeholder="自动计算"></label><button class="remove-segment" type="button" aria-label="删除这一段交通" hidden>×</button></div></div>
-        <button class="add-segment" id="addSegment" type="button">＋ 添加一段交通</button>
-        <p class="distance-hint" id="distanceHint">已根据预设地点填入约 45 km</p><button class="route-button" id="routeDistanceButton" type="button">⌖ 使用高德路线计算</button><p class="route-status" id="routeStatus" role="status"></p>
+        <label class="carbon-field">出发地<select id="originSelect"><option value="上海海事大学">上海海事大学（临港校区北门）</option><option value="临港大道地铁站">临港大道地铁站</option><option value="龙阳路地铁站">龙阳路地铁站</option><option value="custom">自定义输入</option></select></label>
+        <label class="carbon-field custom-place" id="originCustomField" hidden>自定义出发地<input id="originCustom" type="text" placeholder="请输入完整地址，例如：上海市人民广场"></label>
+        <label class="carbon-field">目的地<select id="destinationSelect"><option value="洋山港">洋山港（洋山深水港）</option><option value="外高桥港">外高桥港（上海集装箱外高桥码头）</option><option value="上海港国际客运中心">上海港国际客运中心（西北门）</option><option value="custom">自定义输入</option></select></label>
+        <label class="carbon-field custom-place" id="destinationCustomField" hidden>自定义目的地<input id="destinationCustom" type="text" placeholder="请输入完整地址，例如：上海市上海海事大学"></label>
+        <label class="carbon-field">交通方式<select id="transportMode"><option value="car">驾车</option><option value="bus">公交</option><option value="subway">地铁</option><option value="walk">步行</option><option value="bike">自行车</option><option value="eBike">电动车</option></select></label>
+        <p class="distance-hint" id="distanceHint">无需填写距离，点击计算后自动查询高德路线。</p>
+        <p class="route-note">公交采用不乘地铁策略；地铁采用公共交通最快方案，可能包含公交与步行。两者按整条方案距离估算排放，并非逐段实测。跨海或超出服务范围的路线可能无法规划。</p>
+        <p class="route-status" id="routeStatus" role="status"></p>
         <button class="primary-btn carbon-submit" type="submit">计算碳足迹 <span>→</span></button>
         <p class="carbon-error" id="carbonError" role="alert" hidden></p>
       </form>
 
       <section class="carbon-result carbon-panel" id="carbonResult" hidden aria-live="polite">
         <div class="carbon-panel-heading"><div><p class="eyebrow">YOUR IMPACT</p><h2>这趟出行留下了</h2></div><span class="result-mode" id="resultMode">地铁</span></div>
+        <p class="result-distance">高德路线距离 <strong id="resultDistance">—</strong></p>
         <div class="impact-summary">
           <div class="impact-number"><strong id="emissionValue">0.00</strong><span>kg CO₂</span></div>
           <div class="impact-ring" id="impactRing" role="img" aria-label="本次排放占低碳目标的比例">
@@ -58,7 +59,7 @@
       </section>
     </section>
 
-    <section class="chart-panel carbon-panel" id="chartPanel" hidden><div class="carbon-panel-heading"><div><p class="eyebrow">EMISSION COMPARISON</p><h2>同样距离下的交通方式比较</h2><p class="chart-subtitle">按本次总距离估算每人碳排放；本次选择的方式以绿色标出</p></div><span class="chart-distance" id="chartDistance"></span></div><div class="chart-wrap"><canvas id="carbonChart" aria-label="全部交通方式碳排放对比图"></canvas></div></section>
+    <section class="chart-panel carbon-panel" id="chartPanel" hidden><div class="carbon-panel-heading"><div><p class="eyebrow">EMISSION COMPARISON</p><h2>同样距离下的交通方式比较</h2><p class="chart-subtitle">统一按本次高德路线距离估算每人排放；其他交通方式的实际路线可能不同，绿色标出本次选择</p></div><span class="chart-distance" id="chartDistance"></span></div><div class="chart-wrap"><canvas id="carbonChart" aria-label="全部交通方式碳排放对比图"></canvas></div></section>
     <section class="chart-panel carbon-panel carbon-history-panel" id="carbonHistoryPanel">
       <div class="carbon-panel-heading">
         <div><p class="eyebrow">YOUR CARBON JOURNAL</p><h2>我的碳积分与近 7 天趋势</h2><p class="chart-subtitle">每次积分 = 100 ÷（1 + 本次排放 kg），保留两位小数；排放越低，积分越高</p></div>
@@ -87,6 +88,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="js/map-config.js"></script>
-  <script src="js/carbon.js?v=carbon-history-share-v4"></script>
+  <script src="js/carbon.js?v=carbon-auto-route-v1"></script>
 </body>
 </html>

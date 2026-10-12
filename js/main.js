@@ -1,9 +1,9 @@
 const typeMeta = {
-  policy: { label: "政策", color: "#26718b", background: "#cfe6f0" },
-  term: { label: "术语", color: "#3e7b3c", background: "#d8ebc9" },
-  industry: { label: "行业黄页", color: "#ad5237", background: "#f4c9b9" },
-  job: { label: "岗位观察", color: "#84621b", background: "#f7edbd" },
-  law: { label: "普法", color: "#73519b", background: "#e9ddf5" }
+  policy: { label: "政策", color: "#26718b", background: "#cfe6f0", tagColor: "#3B82F6" },
+  term: { label: "术语", color: "#3e7b3c", background: "#d8ebc9", tagColor: "#10B981" },
+  industry: { label: "行业黄页", color: "#ad5237", background: "#f4c9b9", tagColor: "#8B5CF6" },
+  job: { label: "岗位观察", color: "#84621b", background: "#f7edbd", tagColor: "#F59E0B" },
+  law: { label: "普法", color: "#73519b", background: "#e9ddf5", tagColor: "#EF4444" }
 };
 
 const statsVersion = "launch-zero-20260924";
@@ -29,6 +29,10 @@ const rankingList = document.querySelector("#rankingList");
 const categoryRankingList = document.querySelector("#categoryRankingList");
 const emptyState = document.querySelector("#emptyState");
 const toast = document.querySelector("#toast");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const popTimers = new WeakMap();
+let notesRenderTimer;
+let hasRenderedNotes = false;
 const lightbox = document.createElement("div");
 lightbox.className = "image-lightbox";
 lightbox.hidden = true;
@@ -142,8 +146,23 @@ function openLightbox(note, index = 0) {
 }
 function closeLightbox() { lightbox.hidden = true; lightboxImage.removeAttribute("src"); }
 
-function renderNotes() {
+function noteStats(note) {
+  if (note.isTemplate) return `<span class="note-template-stats">示例模板 · 不计取用</span>`;
+  return `<span class="note-stats" role="group" aria-label="取用 ${viewCount(note)} 次，收藏 ${favoriteCount(note)} 次"><span aria-hidden="true">👁</span><span class="note-count" data-use-count>${viewCount(note)}</span><span aria-hidden="true">· ⭐</span><span class="note-count" data-favorite-count>${favoriteCount(note)}</span></span>`;
+}
+
+function renderNotes({ animate = !hasRenderedNotes, filterTransition = false } = {}) {
   if (!wall) return;
+  window.clearTimeout(notesRenderTimer);
+  notesRenderTimer = undefined;
+  wall.classList.remove("is-filtering");
+  wall.setAttribute("aria-busy", "false");
+  const flippedIds = new Set([...wall.querySelectorAll(".note-card.flipped")].map(card => Number(card.dataset.id)));
+  const focused = document.activeElement;
+  const focusedCard = focused.closest(".note-card");
+  const focusId = focusedCard && wall.contains(focusedCard) ? focusedCard.dataset.id : null;
+  const focusAction = focused.dataset.action;
+  const focusImage = focused.dataset.imageIndex;
   const current = visibleNotes();
   wall.innerHTML = current.map((note, index) => {
     const meta = metaFor(note);
@@ -153,10 +172,12 @@ function renderNotes() {
     const tag = note.isTemplate ? "填写模板" : (saved ? "已收藏" : (pendingJob ? "待核实" : "可取用"));
     const source = note.type === "industry" ? `资料核验：${escapeHtml(organizationValue(note, "verifiedDate", "待核验"))}` : (note.type === "job" ? `资料日期：${note.date} · 核验：${escapeHtml(profileValue(note.jobProfile, "verifiedDate", "待核验"))}` : note.date);
     const linkHint = note.type === "industry" && !noteLinks(note).length ? `<p class="organization-link-hint">机构官网、项目／报告链接待补充</p>` : "";
-    return `<article class="note-card ${saved ? "saved" : ""} ${note.type === "job" ? "job-card" : ""}" style="--note-bg:${meta.background};--note-accent:${meta.color};--tilt:${index % 2 ? "1.3deg" : "-1.2deg"}" data-id="${note.id}" tabindex="0" aria-label="${note.title}，点击翻转查看详情">
+    const entryClass = animate && !reducedMotion.matches ? `is-entering ${filterTransition ? "filter-entry" : ""}` : "";
+    const heading = `<div class="note-card-heading"><span class="note-category">${meta.label}</span><span class="note-icon" aria-hidden="true">${note.icon}</span></div>`;
+    return `<article class="note-card ${saved ? "saved" : ""} ${note.type === "job" ? "job-card" : ""} ${flippedIds.has(note.id) ? "flipped" : ""} ${entryClass}" style="--note-bg:${meta.background};--note-accent:${meta.color};--tag-color:${meta.tagColor};--enter-delay:${index * 0.05}s" data-id="${note.id}" tabindex="0" aria-label="${escapeHtml(note.title)}，点击翻转查看详情">
       <div class="note-card-inner">
-        <div class="note-face note-front"><span class="note-category">${meta.label} / ${String(note.id).padStart(2, "0")}</span><span class="note-tag">${tag}</span><div class="note-front-content">${frontImage(note)}<span class="note-icon" aria-hidden="true">${note.icon}</span><h3>${note.title}</h3>${organizationFront(note)}${jobFront(note)}</div><div class="note-footer"><span>${note.isTemplate ? "示例模板 · 不计取用" : `${viewCount(note)} 次取用`}</span><button class="heart" type="button" data-action="favorite" ${note.isTemplate ? "disabled" : ""} aria-label="${note.isTemplate ? "填写完成后可收藏" : (saved ? "取消收藏" : "收藏")}">${saved ? "♥" : "♡"}</button></div></div>
-        <div class="note-face note-back"><span class="note-category">DETAIL / ${meta.label}</span>${optionalImage(note)}<div class="note-detail"><h3>${note.title}</h3><p>${note.detail}</p>${organizationDetail(note)}${jobDetail(note)}${basisRow}</div><div class="detail-source">${source}${note.isTemplate ? "" : ` · ${favoriteCount(note)} 人收藏`}</div><div class="note-actions">${optionalLink(note)}${linkHint}${qrMarkup(note)}<button class="take-btn" type="button" data-action="take" ${note.isTemplate ? "disabled" : ""}>${note.isTemplate ? "填写并核验后可取用" : "取用这张便利贴　→"}</button></div></div>
+        <div class="note-face note-front">${heading}<div class="note-front-content">${frontImage(note)}<h3>${escapeHtml(note.title)}</h3><span class="note-tag">${tag}</span>${organizationFront(note)}${jobFront(note)}</div><div class="note-footer">${noteStats(note)}<button class="heart" type="button" data-action="favorite" ${note.isTemplate ? "disabled" : ""} aria-pressed="${saved}" aria-label="${note.isTemplate ? "填写完成后可收藏" : (saved ? "取消收藏" : "收藏")}">${saved ? "♥" : "♡"}</button></div></div>
+        <div class="note-face note-back">${heading}${optionalImage(note)}<div class="note-detail"><h3>${escapeHtml(note.title)}</h3><p>${note.detail}</p>${organizationDetail(note)}${jobDetail(note)}${basisRow}</div><div class="detail-source">${source}</div><div class="note-actions">${optionalLink(note)}${linkHint}${qrMarkup(note)}<div class="note-footer">${noteStats(note)}</div><button class="take-btn" type="button" data-action="take" ${note.isTemplate ? "disabled" : ""}>${note.isTemplate ? "填写并核验后可取用" : "取用这张便利贴　→"}</button></div></div>
       </div>
     </article>`;
   }).join("");
@@ -189,6 +210,36 @@ function renderNotes() {
       card.querySelector('[data-action="take"]').addEventListener("click", event => { event.stopPropagation(); takeNote(Number(card.dataset.id)); });
     }
   });
+  hasRenderedNotes = true;
+  if (focusId) {
+    const card = wall.querySelector(`.note-card[data-id="${focusId}"]`);
+    const target = focusAction ? card?.querySelector(`[data-action="${focusAction}"]${focusImage === undefined ? "" : `[data-image-index="${focusImage}"]`}`) : card;
+    if (target) target.focus({ preventScroll: true });
+  }
+}
+
+function transitionNotes() {
+  if (!wall) return;
+  window.clearTimeout(notesRenderTimer);
+  if (reducedMotion.matches || !wall.children.length) {
+    renderNotes({ animate: false });
+    return;
+  }
+  wall.classList.add("is-filtering");
+  wall.setAttribute("aria-busy", "true");
+  notesRenderTimer = window.setTimeout(() => renderNotes({ animate: true, filterTransition: true }), 300);
+}
+
+function popCount(element) {
+  window.clearTimeout(popTimers.get(element));
+  element.classList.remove("pop");
+  if (reducedMotion.matches) return;
+  void element.offsetWidth;
+  element.classList.add("pop");
+  popTimers.set(element, window.setTimeout(() => {
+    element.classList.remove("pop");
+    popTimers.delete(element);
+  }, 300));
 }
 
 lightbox.addEventListener("click", event => { if (event.target === lightbox || event.target.classList.contains("lightbox-close")) closeLightbox(); });
@@ -222,12 +273,32 @@ function toggleFavorite(id) {
 }
 function takeNote(id) {
   if (!window.requireLogin("take")) return;
-  state.uses[id] = (state.uses[id] || 0) + 1;
-  state.usageLog.push({ id, time: Date.now() });
-  localStorage.setItem("green-port-uses", JSON.stringify(state.uses));
-  localStorage.setItem("green-port-usage-log", JSON.stringify(state.usageLog));
+  const nextUses = { ...state.uses, [id]: (state.uses[id] || 0) + 1 };
+  const nextLog = [...state.usageLog, { id, time: Date.now() }];
+  try {
+    const previousUses = localStorage.getItem("green-port-uses");
+    localStorage.setItem("green-port-uses", JSON.stringify(nextUses));
+    try {
+      localStorage.setItem("green-port-usage-log", JSON.stringify(nextLog));
+    } catch (error) {
+      if (previousUses === null) localStorage.removeItem("green-port-uses");
+      else localStorage.setItem("green-port-uses", previousUses);
+      throw error;
+    }
+  } catch (error) {
+    window.GreenPortAuth.reportError(error);
+    return;
+  }
+  state.uses = nextUses;
+  state.usageLog = nextLog;
+  const note = noteData.find(item => item.id === id);
+  wall?.querySelectorAll(`.note-card[data-id="${id}"] .note-stats`).forEach(stats => {
+    stats.setAttribute("aria-label", `取用 ${viewCount(note)} 次，收藏 ${favoriteCount(note)} 次`);
+    const count = stats.querySelector("[data-use-count]");
+    count.textContent = viewCount(note);
+    popCount(count);
+  });
   setText("#todayUses", Object.values(state.uses).reduce((sum, value) => sum + value, 0));
-  renderNotes();
   renderRanking();
   showToast("已取用，这张知识现在属于你了");
 }
@@ -269,10 +340,10 @@ document.querySelectorAll(".ranking-tab").forEach(tab => tab.addEventListener("c
 
 document.querySelectorAll(".filter-tab").forEach(tab => tab.addEventListener("click", () => {
   document.querySelectorAll(".filter-tab").forEach(item => { item.classList.remove("active"); item.setAttribute("aria-selected", "false"); });
-  tab.classList.add("active"); tab.setAttribute("aria-selected", "true"); state.filter = tab.dataset.filter; renderNotes();
+  tab.classList.add("active"); tab.setAttribute("aria-selected", "true"); state.filter = tab.dataset.filter; transitionNotes();
 }));
-listen("#searchInput", "input", event => { state.search = event.target.value; renderNotes(); });
-listen("#savedTrigger", "click", () => { if (!window.requireLogin("favorite")) return; state.filter = "saved"; state.search = ""; document.querySelector("#searchInput").value = ""; renderNotes(); showToast(state.saved.length ? `已筛选 ${state.saved.length} 张收藏便利贴` : "还没有收藏便利贴"); });
+listen("#searchInput", "input", event => { state.search = event.target.value; transitionNotes(); });
+listen("#savedTrigger", "click", () => { if (!window.requireLogin("favorite")) return; state.filter = "saved"; state.search = ""; document.querySelector("#searchInput").value = ""; transitionNotes(); showToast(state.saved.length ? `已筛选 ${state.saved.length} 张收藏便利贴` : "还没有收藏便利贴"); });
 listen("#feedbackTrigger", "click", () => { document.querySelector("#feedbackModal").hidden = false; document.querySelector("#feedbackText").focus(); });
 listen("[data-close-modal]", "click", () => { document.querySelector("#feedbackModal").hidden = true; });
 listen("#feedbackModal", "click", event => { if (event.target.id === "feedbackModal") event.currentTarget.hidden = true; });
